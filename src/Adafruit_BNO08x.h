@@ -44,7 +44,7 @@ public:
 
   bool begin_I2C(uint8_t i2c_addr = BNO08x_I2CADDR_DEFAULT,
                  TwoWire *wire = &Wire, int32_t sensor_id = 0);
-  bool begin_UART(HardwareSerial *serial, int32_t sensor_id = 0);
+// bool begin_UART(HardwareSerial *serial, int32_t sensor_id = 0);
 
   bool begin_SPI(uint8_t cs_pin, uint8_t int_pin, SPIClass *theSPI = &SPI,
                  int32_t sensor_id = 0);

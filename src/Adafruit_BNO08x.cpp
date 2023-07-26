@@ -42,7 +42,7 @@ static Adafruit_SPIDevice *spi_dev = NULL; ///< Pointer to SPI bus interface
 static int8_t _int_pin, _reset_pin;
 
 static Adafruit_I2CDevice *i2c_dev = NULL; ///< Pointer to I2C bus interface
-static HardwareSerial *uart_dev = NULL;
+//static HardwareSerial *uart_dev = NULL;
 
 static sh2_SensorValue_t *_sensor_value = NULL;
 static bool _reset_occurred = false;
@@ -132,6 +132,7 @@ bool Adafruit_BNO08x::begin_I2C(uint8_t i2c_address, TwoWire *wire,
  *            The user-defined ID to differentiate different sensors
  * @return  true if initialization was successful, otherwise false.
  */
+#ifdef BNO_UART
 bool Adafruit_BNO08x::begin_UART(HardwareSerial *serial, int32_t sensor_id) {
   uart_dev = serial;
 
@@ -143,6 +144,7 @@ bool Adafruit_BNO08x::begin_UART(HardwareSerial *serial, int32_t sensor_id) {
 
   return _init(sensor_id);
 }
+#endif
 
 /*!
  *    @brief  Sets up the hardware and initializes hardware SPI
@@ -406,7 +408,7 @@ static int i2chal_write(sh2_Hal_t *self, uint8_t *pBuffer, unsigned len) {
 
 /**************************************** UART interface
  * ***********************************************************/
-
+#ifdef BNO_UART
 static int uarthal_open(sh2_Hal_t *self) {
   // Serial.println("UART HAL open");
   uart_dev->begin(3000000);
@@ -534,6 +536,7 @@ static int uarthal_write(sh2_Hal_t *self, uint8_t *pBuffer, unsigned len) {
 
   return len;
 }
+#endif
 
 /**************************************** UART interface
  * ***********************************************************/
